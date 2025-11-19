@@ -3,6 +3,30 @@ services:
     build:
       context: .
       dockerfile: docker/node/Dockerfile
-    container_name: svelte-frontend
     ports:
       - "4173:4173"
+    environment:
+      - DB_HOST=mariadb
+      - DB_USER=devuser
+      - DB_PASSWORD=JqdWm5wgJmf8cbZV8hHKvhqskXNvZyxquGwzhjTrcfwnK45FyR8yyMvDtaxGNYWC
+      - DB_NAME=lorem_db
+      - DB_PORT=3306
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:11
+    container_name: mariadb-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 697y9D6RyswtfAphVjwqhbWBEyE61p5qEL1B7UdJCJzyEpB77zq47xszvTDxw78N
+      MYSQL_DATABASE: lorem_db
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: JqdWm5wgJmf8cbZV8hHKvhqskXNvZyxquGwzhjTrcfwnK45FyR8yyMvDtaxGNYWC
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mariadb_data:

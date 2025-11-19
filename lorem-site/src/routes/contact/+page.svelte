@@ -1,53 +1,40 @@
 <script lang="ts">
-    let formData = $state({
-		name: '',
-		email: '',
-		subject: '',
-		message: ''
-	});
+	import type { ActionData } from './$types';
 
-	let submitted = $state(false);
-
-	function handleSubmit(e: Event) {
-		e.preventDefault();
-		console.log('Form submitted:', formData);
-		submitted = true;
-		
-		// Reset form after 3 seconds
-		setTimeout(() => {
-			submitted = false;
-			formData = {
-				name: '',
-				email: '',
-				subject: '',
-				message: ''
-			};
-		}, 3000);
-	}
+	let { form }: { form: ActionData } = $props();
 </script>
 
 <div class="row">
 	<div class="col-lg-8 mx-auto">
 		<h1 class="mb-4">Contact Us</h1>
 		
-		{#if submitted}
+		{#if form?.success}
 			<div class="alert alert-success" role="alert">
 				<h4 class="alert-heading">Thank you!</h4>
-				<p>Your message has been sent successfully. We'll get back to you soon.</p>
+				<p>{form.message}</p>
+			</div>
+		{/if}
+
+		{#if form?.error}
+			<div class="alert alert-danger" role="alert">
+				<strong>Error:</strong> {form.error}
 			</div>
 		{/if}
 
 		<div class="card">
 			<div class="card-body">
-				<form on:submit={handleSubmit}>
+				<form method="POST">
 					<div class="mb-3">
 						<label for="name" class="form-label">Name</label>
 						<input 
 							type="text" 
 							class="form-control" 
-							id="name" 
-							bind:value={formData.name}
+							id="name"
+							name="name"
+							value={form?.name || ''}
 							required 
+							minlength="2"
+							maxlength="100"
 							placeholder="Enter your name"
 						/>
 					</div>
@@ -57,9 +44,11 @@
 						<input 
 							type="email" 
 							class="form-control" 
-							id="email" 
-							bind:value={formData.email}
+							id="email"
+							name="email"
+							value={form?.email || ''}
 							required 
+							maxlength="254"
 							placeholder="name@example.com"
 						/>
 					</div>
@@ -69,9 +58,12 @@
 						<input 
 							type="text" 
 							class="form-control" 
-							id="subject" 
-							bind:value={formData.subject}
+							id="subject"
+							name="subject"
+							value={form?.subject || ''}
 							required 
+							minlength="3"
+							maxlength="200"
 							placeholder="What is this about?"
 						/>
 					</div>
@@ -80,10 +72,13 @@
 						<label for="message" class="form-label">Message</label>
 						<textarea 
 							class="form-control" 
-							id="message" 
-							rows="5" 
-							bind:value={formData.message}
+							id="message"
+							name="message"
+							rows="5"
+							value={form?.message || ''}
 							required 
+							minlength="10"
+							maxlength="2000"
 							placeholder="Your message here..."
 						></textarea>
 					</div>
