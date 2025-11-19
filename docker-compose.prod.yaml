@@ -1,0 +1,20 @@
+# PRODUCTION DOCKER COMPOSE
+# Run with: docker compose -f docker-compose.prod.yaml up -d
+# For EC2 deployment - uses external AWS RDS database
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    ports:
+      - "80:3000"
+    environment:
+      # Update these with your AWS RDS credentials
+      - DB_HOST=your-rds-endpoint.region.rds.amazonaws.com
+      - DB_USER=your_aws_db_user
+      - DB_PASSWORD=your_aws_db_password
+      - DB_NAME=lorem_db
+      - DB_PORT=3306
+      - PORT=3000
+    restart: unless-stopped

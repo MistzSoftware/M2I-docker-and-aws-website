@@ -1,27 +1,33 @@
+# DEVELOPMENT DOCKER COMPOSE
+# Run with: docker compose up
+# For local development with hot reload and local MariaDB
+
 services:
   frontend:
     build:
       context: .
-      dockerfile: docker/node/Dockerfile
+      dockerfile: docker/node/Dockerfile.dev
     ports:
-      - "4173:4173"
+      - "5173:5173"  # Vite dev server
     environment:
       - DB_HOST=mariadb
       - DB_USER=devuser
-      - DB_PASSWORD=JqdWm5wgJmf8cbZV8hHKvhqskXNvZyxquGwzhjTrcfwnK45FyR8yyMvDtaxGNYWC
+      - DB_PASSWORD=student_password
       - DB_NAME=lorem_db
       - DB_PORT=3306
+    volumes:
+      - ./lorem-site:/app
+      - /app/node_modules
     depends_on:
       - mariadb
 
   mariadb:
     image: mariadb:11
-    container_name: mariadb-db
     environment:
-      MYSQL_ROOT_PASSWORD: 697y9D6RyswtfAphVjwqhbWBEyE61p5qEL1B7UdJCJzyEpB77zq47xszvTDxw78N
+      MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: lorem_db
       MYSQL_USER: devuser
-      MYSQL_PASSWORD: JqdWm5wgJmf8cbZV8hHKvhqskXNvZyxquGwzhjTrcfwnK45FyR8yyMvDtaxGNYWC
+      MYSQL_PASSWORD: student_password
     ports:
       - "3306:3306"
     volumes:
