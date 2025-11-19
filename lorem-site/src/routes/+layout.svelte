@@ -6,8 +6,8 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<link href="https://m2i-loremsite-bootstrap.s3.us-east-1.amazonaws.com/bootstrap-5.3.2-dist/css/bootstrap.min.css" rel="stylesheet" />
+	<script src="https://m2i-loremsite-bootstrap.s3.us-east-1.amazonaws.com/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 </svelte:head>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

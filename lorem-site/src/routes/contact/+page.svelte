@@ -1,5 +1,5 @@
 <script lang="ts">
-	let formData = $state({
+    let formData = $state({
 		name: '',
 		email: '',
 		subject: '',
@@ -10,7 +10,6 @@
 
 	function handleSubmit(e: Event) {
 		e.preventDefault();
-		// Here you would typically send the data to your backend
 		console.log('Form submitted:', formData);
 		submitted = true;
 		
